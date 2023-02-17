@@ -159,7 +159,6 @@ const Generate = () => {
                       id="title"
                       placeholder="Story Title"
                     />
-                    <p className="text-sm ">Enter your story title here.</p>
                   </div>
                 </div>
 
