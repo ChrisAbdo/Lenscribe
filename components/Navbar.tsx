@@ -63,7 +63,7 @@ export default function Navbar() {
     return null;
   }
   return (
-    <header className="flex justify-between items-center p-4 w-full border-b border-black">
+    <header className="flex justify-between items-center p-4 w-full border-b border-black sticky top-0 z-50 bg-white dark:bg-black">
       <Link href="/" className="flex space-x-3">
         <h1 className="text-2xl font-bold ml-2 tracking-tight">Lenscribe</h1>
       </Link>

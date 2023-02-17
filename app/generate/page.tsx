@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import * as Toolbar from '@radix-ui/react-toolbar';
 import {
   StrikethroughIcon,
@@ -24,12 +24,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 const Generate = () => {
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState('');
   const [vibe, setVibe] = useState('Professional');
   const [generatedBios, setGeneratedBios] = useState<String>('');
+  const [doc, setDoc] = useState<string>('# Hello, World!\n\n\n\n');
+  const handleDocChange = useCallback((newDoc: string) => {
+    setDoc(newDoc);
+  }, []);
 
   console.log('Streamed response: ', generatedBios);
 
@@ -82,207 +88,90 @@ const Generate = () => {
   };
 
   return (
-    <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2">
+    <div>
       <Head>
         <title>Twitter Generator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4">
-        <div className="sticky top-0 z-1 w-full">
-          <h1 className="sm:text-6xl text-4xl  font-bold text-black dark:text-white ">
-            Share your stories to Lens.
-          </h1>
-          <p className="text-xl text-gray-500 dark:text-gray-400 mt-4">
-            Make one yourself or let us generate a story for you with GPT3!
-          </p>
-          <div className="mt-4">
-            <Toolbar.Root
-              className="flex p-[10px] w-full min-w-max rounded-md bg-white dark:bg-[#111] border border-black"
-              aria-label="Formatting options"
-            >
-              <Toolbar.ToggleGroup
-                type="multiple"
-                aria-label="Text formatting"
-                className="space-x-1"
-              >
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="bold"
-                  aria-label="Bold"
-                >
-                  <FontBoldIcon />
-                </Toolbar.ToggleItem>
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="italic"
-                  aria-label="Italic"
-                >
-                  <FontItalicIcon />
-                </Toolbar.ToggleItem>
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="strikethrough"
-                  aria-label="Strike through"
-                >
-                  <StrikethroughIcon />
-                </Toolbar.ToggleItem>
-              </Toolbar.ToggleGroup>
-              <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
-              <Toolbar.ToggleGroup
-                type="single"
-                defaultValue="center"
-                aria-label="Text alignment"
-                className="space-x-1"
-              >
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="left"
-                  aria-label="Left aligned"
-                >
-                  <TextAlignLeftIcon />
-                </Toolbar.ToggleItem>
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="center"
-                  aria-label="Center aligned"
-                >
-                  <TextAlignCenterIcon />
-                </Toolbar.ToggleItem>
-                <Toolbar.ToggleItem
-                  className="flex-shrink-0 flex-grow-0 basis-auto text-black dark:text-white h-[25px] px-[5px] rounded inline-flex text-[13px] leading-none items-center justify-center bg-white dark:bg-[#333] ml-0.5 outline-none hover:bg-violet3 hover:text-violet11 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7 first:ml-0 data-[state=on]:bg-violet5 data-[state=on]:text-violet11"
-                  value="right"
-                  aria-label="Right aligned"
-                >
-                  <TextAlignRightIcon />
-                </Toolbar.ToggleItem>
-              </Toolbar.ToggleGroup>
-              <Toolbar.Separator className="w-[1px] bg-mauve6 mx-[10px]" />
+      <main>
+        <div className="bg-white dark:bg-black py-24 sm:py-32">
+          {/* <!-- spacer div --> */}
+          <div className="h-[5rem]"></div>
 
-              <Toolbar.Button
-                className="px-[10px] text-white bg-violet9 flex-shrink-0 flex-grow-0 basis-auto h-[25px] rounded inline-flex text-[13px] leading-none items-center justify-center outline-none hover:bg-violet10 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet7"
-                style={{ marginLeft: 'auto' }}
-              >
-                Share
-              </Toolbar.Button>
-            </Toolbar.Root>
+          <div className="mx-auto flex max-w-5xl flex-col items-start gap-10 px-6 md:flex-row lg:px-8">
+            <div className="w-full md:sticky md:top-10 md:w-[28rem]">
+              <p className="mt-12 text-3xl font-bold tracking-tight sm:text-4xl">
+                Write a story to post on Lens!
+              </p>
+              <p className="mt-6 mb-2 text-base leading-7">
+                Or if you&apos;re feeling lazy, you can generate a story with
+                GPT3!
+              </p>
+              <Button size="lg" variant="default">
+                <span className="text-white dark:text-black flex">
+                  Generate with AI&nbsp;
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+                    />
+                  </svg>
+                </span>
+              </Button>
+            </div>
+            <div className="mt-5 w-full min-w-0 flex-1 md:mt-0">
+              <dl className="grid grid-cols-1 gap-y-10 gap-x-8 md:max-w-xl lg:max-w-none lg:gap-y-16">
+                <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="title">Title</Label>
+                    <Input type="email" id="title" placeholder="Story Title" />
+                    <p className="text-sm ">Enter your story title here.</p>
+                  </div>
+                </div>
+
+                <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="title">Story</Label>
+                    <Textarea placeholder="Write your story here..." />
+                  </div>
+                </div>
+
+                <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="title">Description</Label>
+                    <Textarea placeholder="Enter a short description here..." />
+                  </div>
+                </div>
+
+                <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="title">Cover Image</Label>
+                    <input
+                      className="block w-full p-2 text-sm text-gray-900 border border-slate-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-[#111] dark:border-[#333] dark:placeholder-gray-400"
+                      id="file_input"
+                      type="file"
+                    />
+                  </div>
+                </div>
+
+                <Button size="lg" variant="default" className="w-full">
+                  <span className="text-white dark:text-black">
+                    Upload Story to Lens 🌿
+                  </span>
+                </Button>
+              </dl>
+            </div>
           </div>
         </div>
-
-        <div className="max-w-2xl w-full mt-4">
-          <h1 className=" font-medium text-2xl mt-12">Your Playground</h1>
-          <div className="flex mt-10 items-center space-x-3">
-            <p className="text-left font-medium text-xl">
-              What would you like to generate?
-            </p>
-          </div>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a fruit" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Categories</SelectLabel>
-                <SelectItem value="two sentence horror story">
-                  Two Sentence Horror Story{' '}
-                </SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectLabel>Vegetables</SelectLabel>
-                <SelectItem value="aubergine">Aubergine</SelectItem>
-                <SelectItem value="broccoli">Broccoli</SelectItem>
-                <SelectItem value="carrot" disabled>
-                  Carrot
-                </SelectItem>
-                <SelectItem value="courgette">Courgette</SelectItem>
-                <SelectItem value="leek">Leek</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectLabel>Meat</SelectLabel>
-                <SelectItem value="beef">Beef</SelectItem>
-                <SelectItem value="chicken">Chicken</SelectItem>
-                <SelectItem value="lamb">Lamb</SelectItem>
-                <SelectItem value="pork">Pork</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            rows={4}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
-            placeholder={
-              'e.g. Senior Developer Advocate @vercel. Tweeting about web development, AI, and React / Next.js. Writing nutlope.substack.com.'
-            }
-          />
-          <div className="flex mb-5 items-center space-x-3">
-            <p className="text-left font-medium">Select your vibe.</p>
-          </div>
-          <div className="block">
-            {/* <DropDown vibe={vibe} setVibe={(newVibe) => setVibe(newVibe)} /> */}
-            <select onChange={(e) => setVibe(e.target.value)}>
-              <option value="Professional">Professional</option>
-              <option value="Funny">Funny</option>
-            </select>
-          </div>
-
-          {!loading && (
-            <button
-              className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-              onClick={(e) => generateBio(e)}
-            >
-              Generate your bio &rarr;
-            </button>
-          )}
-          {loading && (
-            <button
-              className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-              disabled
-            >
-              loading
-            </button>
-          )}
-        </div>
-
-        <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-
-        <AnimatePresence mode="wait">
-          <motion.div className="space-y-10 my-10">
-            {generatedBios && (
-              <>
-                <div>
-                  <h2 className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto">
-                    Your generated bios
-                  </h2>
-                </div>
-                <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                  {generatedBios
-                    .substring(generatedBios.indexOf('1') + 3)
-                    .split('2.')
-                    .map((generatedBio) => {
-                      return (
-                        <div
-                          className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                          onClick={() => {
-                            navigator.clipboard.writeText(generatedBio);
-                          }}
-                          key={generatedBio}
-                        >
-                          <p>{generatedBio}</p>
-                        </div>
-                      );
-                    })}
-                </div>
-              </>
-            )}
-          </motion.div>
-        </AnimatePresence>
       </main>
     </div>
   );
