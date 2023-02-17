@@ -15,7 +15,19 @@ import useLogin from '@/lens/lib/auth/useLogin';
 import { Button } from './ui/button';
 import { useTheme } from 'next-themes';
 import { cn } from '@/utils/utils';
-import { Sun, Moon, Laptop, Search, Wifi } from 'lucide-react';
+import {
+  Sun,
+  Moon,
+  Laptop,
+  Search,
+  Wifi,
+  HomeIcon,
+  User,
+  Upload,
+  Github,
+  Twitter,
+  BookOpen,
+} from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -64,8 +76,8 @@ export default function Navbar({}: Props) {
   const { isSignedInQuery, profileQuery } = useLensUser();
   const { mutate: requestLogin } = useLogin();
 
-  // dark theme mounted state
   const [mounted, setMounted] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
@@ -79,41 +91,6 @@ export default function Navbar({}: Props) {
       <Link href="/" className="flex space-x-3">
         <h1 className="text-2xl font-bold ml-2 tracking-tight">Lenscribe</h1>
       </Link>
-
-      {/* <NavigationMenu>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-rose-500 to-indigo-700 p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mt-4 mb-2 text-lg font-medium text-white">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-white/90">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenu> */}
       <nav aria-label="Site Nav" className="hidden md:block">
         <ul className="flex items-center gap-6 text-sm">
           <li>
@@ -237,29 +214,123 @@ export default function Navbar({}: Props) {
           </DialogContent>
         </Dialog>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="">
-              <Sun size={15} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 mt-2 mr-4">
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => setTheme('light')}>
-                <Sun className="mr-2 h-4 w-4" />
-                <span className="text-black dark:text-white">Light</span>
+        {/* make hidden on small screen */}
+        <div className="hidden md:block">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="">
+                <Sun size={15} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 mt-2 mr-4">
+              <DropdownMenuGroup>
+                <DropdownMenuItem onClick={() => setTheme('light')}>
+                  <Sun className="mr-2 h-4 w-4" />
+                  <span className="text-black dark:text-white">Light</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')}>
+                  <Moon className="mr-2 h-4 w-4" />
+                  <span className="text-black dark:text-white">Dark</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')}>
+                  <Laptop className="mr-2 h-4 w-4" />
+                  <span className="text-black dark:text-white">System</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div className="block md:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Lenscribe</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <Link href="/">
+                  <DropdownMenuItem>
+                    <HomeIcon className="mr-2 h-4 w-4" />
+                    <span>Home</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/profile">
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/discover">
+                  <DropdownMenuItem>
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    <span>Discover</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/generate">
+                  <DropdownMenuItem>
+                    <Upload className="mr-2 h-4 w-4" />
+                    <span>Generate</span>
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <Sun className="mr-2 h-4 w-4" />
+                    <span>Theme</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem onClick={() => setTheme('light')}>
+                        <Sun className="mr-2 h-4 w-4" />
+                        <span>Light</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setTheme('dark')}>
+                        <Moon className="mr-2 h-4 w-4" />
+                        <span>Dark</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+              </DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => setOpen(true)}>
+                <Search className="mr-2 h-4 w-4" />
+                <span>Search</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('dark')}>
-                <Moon className="mr-2 h-4 w-4" />
-                <span className="text-black dark:text-white">Dark</span>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => window.open('https://www.github.com/chrisabdo')}
+              >
+                <Github className="mr-2 h-4 w-4" />
+                <span>GitHub</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('system')}>
-                <Laptop className="mr-2 h-4 w-4" />
-                <span className="text-black dark:text-white">System</span>
+              <DropdownMenuItem
+                onClick={() => window.open('https://www.twitter.com/abdo_eth')}
+              >
+                <Twitter className="mr-2 h-4 w-4" />
+                <span>Twitter</span>
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   );

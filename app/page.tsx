@@ -24,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Github } from 'lucide-react';
+import Link from 'next/link';
 
 interface ParallaxProps {
   children: string;
@@ -130,11 +131,13 @@ export default function Home() {
                   GPT3 compatibility!
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
-                  <Button variant="default" size="lg">
-                    <span className="text-white dark:text-black">
-                      Launch App
-                    </span>
-                  </Button>
+                  <Link href="/generate">
+                    <Button variant="default" size="lg">
+                      <span className="text-white dark:text-black">
+                        Launch App
+                      </span>
+                    </Button>
+                  </Link>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="outline" size="lg">
