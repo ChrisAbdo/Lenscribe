@@ -41,7 +41,7 @@ const Generate = () => {
   console.log('Streamed response: ', generatedBios);
 
   const prompt =
-    'tell me a decently long joke. make sure to have at least 5 characters involved';
+    'Write me an awesome story. DO not make it too long. I want to read it in 1 minute or less.';
 
   const generateBio = async (e: any) => {
     e.preventDefault();

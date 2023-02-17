@@ -9,6 +9,9 @@ import {
   useNetwork,
   ChainId,
 } from '@thirdweb-dev/react';
+import useLensUser from '@/lens/lib/auth/useLensUser';
+import useLogin from '@/lens/lib/auth/useLogin';
+
 import { Button } from './ui/button';
 import { useTheme } from 'next-themes';
 import { cn } from '@/utils/utils';
@@ -47,12 +50,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import SignInButton from './SignInButton';
 
-export default function Navbar() {
+type Props = {};
+
+export default function Navbar({}: Props) {
   const { theme, setTheme } = useTheme();
   const address = useAddress();
   const isOnWrongNetwork = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
+
+  // lens user queries and mutations
+  const { isSignedInQuery, profileQuery } = useLensUser();
+  const { mutate: requestLogin } = useLogin();
+
+  // dark theme mounted state
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -202,19 +214,20 @@ export default function Navbar() {
 
             {/* if there is an address and NOT on wrong network */}
             {address && !isOnWrongNetwork && (
-              <Button
-                onClick={() => {
-                  console.log('disconnect wallet');
-                }}
-                variant="default"
-                size="lg"
-                className="px-4 py-1"
-              >
-                <span className="text-white dark:text-black">
-                  Sign In With Lens 🌿
-                </span>
-              </Button>
+              // <Button
+              //   onClick={() => requestLogin()}
+              //   variant="default"
+              //   size="lg"
+              //   className="px-4 py-1"
+              // >
+              //   <span className="text-white dark:text-black">
+              //     Sign In With Lens 🌿
+              //   </span>
+              // </Button>
+              <SignInButton />
             )}
+
+            {/* if connects to lens, show a hello message */}
           </DialogContent>
         </Dialog>
 
