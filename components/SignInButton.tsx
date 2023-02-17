@@ -17,10 +17,15 @@ import { Loader2 } from 'lucide-react';
 type Props = {};
 
 export default function SignInButton({}: Props) {
+  const [signedInLoading, setSignedInLoading] = React.useState(false);
+
   const address = useAddress(); // Detect the connected address
   const isOnWrongNetwork = useNetworkMismatch(); // Detect if the user is on the wrong network
   const [, switchNetwork] = useNetwork(); // Function to switch the network.
   const { isSignedInQuery, profileQuery } = useLensUser();
+
+  // can you add signedInLoading to the hook?
+
   const { mutate: requestLogin } = useLogin();
 
   // 1. User needs to connect their wallet
@@ -49,7 +54,7 @@ export default function SignInButton({}: Props) {
   if (!isSignedInQuery.data) {
     return (
       <Button
-        className="w-full dark:text-black text-white"
+        className="w-full dark:text-black text-white dark:hover:text-black"
         variant="default"
         size="lg"
         onClick={() => requestLogin()}

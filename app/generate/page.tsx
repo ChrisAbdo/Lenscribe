@@ -3,6 +3,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 import { useState, useCallback } from 'react';
+import { Web3Button } from '@thirdweb-dev/react';
+import {
+  LENS_CONTRACT_ABI,
+  LENS_CONTRACT_ADDRESS,
+} from '@/lens/const/contracts';
+import { useCreatePost } from '@/lens/lib/useCreatePost';
+
 import * as Toolbar from '@radix-ui/react-toolbar';
 import {
   StrikethroughIcon,
@@ -33,10 +40,18 @@ const Generate = () => {
   const [bio, setBio] = useState('');
   const [vibe, setVibe] = useState('Professional');
   const [generatedBios, setGeneratedBios] = useState<String>('');
-  const [doc, setDoc] = useState<string>('# Hello, World!\n\n\n\n');
-  const handleDocChange = useCallback((newDoc: string) => {
-    setDoc(newDoc);
-  }, []);
+  const [image, setImage] = useState<File | null>(null);
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const { mutateAsync: createPost } = useCreatePost();
+
+  console.log('content:', {
+    image,
+    title,
+    description,
+    content,
+  });
 
   console.log('Streamed response: ', generatedBios);
 
@@ -144,7 +159,12 @@ const Generate = () => {
                 <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
                   <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label htmlFor="title">Title</Label>
-                    <Input type="email" id="title" placeholder="Story Title" />
+                    <Input
+                      onChange={(e: any) => setTitle(e.target.value)}
+                      type="email"
+                      id="title"
+                      placeholder="Story Title"
+                    />
                     <p className="text-sm ">Enter your story title here.</p>
                   </div>
                 </div>
@@ -154,8 +174,8 @@ const Generate = () => {
                     <Label htmlFor="title">Story</Label>
                     <Textarea
                       // @ts-ignore
-                      value={generatedBios}
-                      onChange={(e) => setGeneratedBios(e.target.value)}
+                      // value={generatedBios}
+                      onChange={(e) => setContent(e.target.value)}
                       placeholder="Write your story here..."
                       className=""
                     />
@@ -165,7 +185,10 @@ const Generate = () => {
                 <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
                   <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label htmlFor="title">Description</Label>
-                    <Textarea placeholder="Enter a short description here..." />
+                    <Textarea
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Enter a short description here..."
+                    />
                   </div>
                 </div>
 
@@ -176,15 +199,36 @@ const Generate = () => {
                       className="block w-full p-2 text-sm text-gray-900 border border-slate-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-[#111] dark:border-[#333] dark:placeholder-gray-400"
                       id="file_input"
                       type="file"
+                      onChange={(e) => {
+                        if (e.target.files) {
+                          setImage(e.target.files[0]);
+                        }
+                      }}
                     />
                   </div>
                 </div>
 
-                <Button size="lg" variant="default" className="w-full">
+                {/* <Button size="lg" variant="default" className="w-full">
                   <span className="text-white dark:text-black">
                     Upload Story to Lens 🌿
                   </span>
-                </Button>
+                </Button> */}
+                <Web3Button
+                  contractAddress={LENS_CONTRACT_ADDRESS}
+                  contractAbi={LENS_CONTRACT_ABI}
+                  action={async () => {
+                    if (!image) return;
+
+                    return await createPost({
+                      image,
+                      title,
+                      description,
+                      content,
+                    });
+                  }}
+                >
+                  Create Post
+                </Web3Button>
               </dl>
             </div>
           </div>

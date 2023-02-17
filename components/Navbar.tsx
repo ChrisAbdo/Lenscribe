@@ -180,13 +180,19 @@ export default function Navbar({}: Props) {
         </ul>
       </nav>
       <div className="flex space-x-4">
-        {/* <Button variant="outline" size="sm" className="px-4 py-1">
-          Connect Wallet
-        </Button> */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="px-4 py-1">
-              Connect Wallet
+              {/* Connect Wallet */}
+              {/* if there is an address, display the address in stead of the connect wallet text */}
+              {address ? (
+                <span>
+                  {address.substring(0, 5)}...
+                  {address.substring(address.length - 4, address.length)}
+                </span>
+              ) : (
+                <span>Connect Wallet</span>
+              )}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">

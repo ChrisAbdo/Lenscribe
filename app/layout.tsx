@@ -2,7 +2,7 @@
 
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react';
 
 import Navbar from '@/components/Navbar';
@@ -21,6 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const queryClient = new QueryClient();
   return (
     <html lang="en">
       {/*
@@ -32,8 +33,10 @@ export default function RootLayout({
       <body className={poppins.className}>
         <ThemeProvider>
           <ThirdwebProvider activeChain={activeChainId}>
-            <Navbar />
-            {children}
+            <QueryClientProvider client={queryClient}>
+              <Navbar />
+              {children}
+            </QueryClientProvider>
           </ThirdwebProvider>
         </ThemeProvider>
       </body>
