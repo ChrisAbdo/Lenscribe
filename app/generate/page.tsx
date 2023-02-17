@@ -1,7 +1,6 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState, useCallback } from 'react';
 import * as Toolbar from '@radix-ui/react-toolbar';
@@ -40,13 +39,7 @@ const Generate = () => {
   console.log('Streamed response: ', generatedBios);
 
   const prompt =
-    vibe === 'Funny'
-      ? `Generate 2 funny twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure there is a joke in there and it's a little ridiculous. Make sure each generated bio is at max 20 words and base it on this context: ${bio}${
-          bio.slice(-1) === '.' ? '' : '.'
-        }`
-      : `Generate 2 ${vibe} twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure each generated bio is at least 14 words and at max 20 words and base them on this context: ${bio}${
-          bio.slice(-1) === '.' ? '' : '.'
-        }`;
+    'tell me a decently long joke. make sure to have at least 5 characters involved';
 
   const generateBio = async (e: any) => {
     e.preventDefault();
@@ -108,7 +101,11 @@ const Generate = () => {
                 Or if you&apos;re feeling lazy, you can generate a story with
                 GPT3!
               </p>
-              <Button size="lg" variant="default">
+              <Button
+                onClick={(e) => generateBio(e)}
+                size="lg"
+                variant="default"
+              >
                 <span className="text-white dark:text-black flex">
                   Generate with AI&nbsp;
                   <svg
@@ -141,7 +138,13 @@ const Generate = () => {
                 <div className="relative rounded-lg bg-gray-50 dark:bg-[#111] border dark:border-[#333] p-10">
                   <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label htmlFor="title">Story</Label>
-                    <Textarea placeholder="Write your story here..." />
+                    <Textarea
+                      // @ts-ignore
+                      value={generatedBios}
+                      onChange={(e) => setGeneratedBios(e.target.value)}
+                      placeholder="Write your story here..."
+                      className="block w-full resize-y h-24"
+                    />
                   </div>
                 </div>
 
