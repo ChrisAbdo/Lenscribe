@@ -10,30 +10,14 @@ import {
 } from '@/lens/const/contracts';
 import { useCreatePost } from '@/lens/lib/useCreatePost';
 
-import * as Toolbar from '@radix-ui/react-toolbar';
-import {
-  StrikethroughIcon,
-  TextAlignLeftIcon,
-  TextAlignCenterIcon,
-  TextAlignRightIcon,
-  FontBoldIcon,
-  FontItalicIcon,
-} from '@radix-ui/react-icons';
 import { Textarea } from '@/components/ui/text-area';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { useToast } from '@/hooks/ui/use-toast';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
+import ResizablePanel from '@/components/ResizablePanel';
 
 const Generate = () => {
   const [loading, setLoading] = useState(false);
@@ -44,19 +28,12 @@ const Generate = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  // hooks for ui and data
   const { mutateAsync: createPost } = useCreatePost();
-
-  console.log('content:', {
-    image,
-    title,
-    description,
-    content,
-  });
-
-  console.log('Streamed response: ', generatedBios);
+  const { toast } = useToast();
 
   const prompt =
-    'Write me an awesome story. DO not make it too long. I want to read it in 1 minute or less.';
+    'Write me an awesome story. DO not make it too long. I want to read it in 30 seconds or less.';
 
   const generateBio = async (e: any) => {
     e.preventDefault();
@@ -105,13 +82,13 @@ const Generate = () => {
       </Head>
 
       <main>
-        <div className="bg-white dark:bg-black pb-24 sm:pb-32">
+        <div className="bg-white dark:bg-black pb-32 sm:pb-32">
           {/* <!-- spacer div --> */}
           <div className="h-[5rem]"></div>
 
           <div className="mx-auto flex max-w-5xl flex-col items-start gap-10 px-6 md:flex-row lg:px-8">
             <div className="w-full md:sticky md:top-10 md:w-[28rem]">
-              <p className="mt-12 text-3xl font-bold tracking-tight sm:text-4xl">
+              <p className="mt-8 text-3xl font-bold tracking-tight sm:text-4xl">
                 Write a story to post on Lens!
               </p>
               <p className="mt-6 mb-2 text-base leading-7">
@@ -153,6 +130,23 @@ const Generate = () => {
                   </span>
                 </Button>
               )}
+
+              {generatedBios && (
+                <ResizablePanel>
+                  <p
+                    onClick={() => {
+                      // @ts-ignore
+                      navigator.clipboard.writeText(generatedBios);
+                      toast({
+                        title: 'Copied to clipboard!',
+                      });
+                    }}
+                    className="cursor-pointer mt-4 rounded-md p-4 border border-slate-300 card3"
+                  >
+                    {generatedBios}
+                  </p>
+                </ResizablePanel>
+              )}
             </div>
             <div className="mt-5 w-full min-w-0 flex-1 md:mt-0">
               <dl className="grid grid-cols-1 gap-y-10 gap-x-8 md:max-w-xl lg:max-w-none lg:gap-y-16">
@@ -174,8 +168,9 @@ const Generate = () => {
                     <Label htmlFor="title">Story</Label>
                     <Textarea
                       // @ts-ignore
-                      // value={generatedBios}
+                      // value={generatedBios || content}
                       onChange={(e) => setContent(e.target.value)}
+                      // onChange={(e) => setGeneratedBios(e.target.value)}
                       placeholder="Write your story here..."
                       className=""
                     />
@@ -196,7 +191,7 @@ const Generate = () => {
                   <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label htmlFor="title">Cover Image</Label>
                     <input
-                      className="block w-full p-2 text-sm text-gray-900 border border-slate-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-[#111] dark:border-[#333] dark:placeholder-gray-400"
+                      className="block w-full p-2 text-sm text-gray-900 border border-slate-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-[#111] dark:border-[#333] dark:placeholder-gray-400 active:ring-2 active:ring-offset-2 active:ring-offset-gray-50 active:ring-slate-500"
                       id="file_input"
                       type="file"
                       onChange={(e) => {
@@ -226,8 +221,20 @@ const Generate = () => {
                       content,
                     });
                   }}
+                  onSuccess={() => {
+                    toast({
+                      title: 'Post uploaded to Lens!',
+                    });
+                  }}
+                  onError={(e) => {
+                    toast({
+                      title: 'Error uploading post to Lens',
+                      description: e.message,
+                    });
+                  }}
+                  className="dark:bg-white dark:text-black dark:hover:bg-white/80"
                 >
-                  Create Post
+                  Upload Story to Lens 🌿
                 </Web3Button>
               </dl>
             </div>

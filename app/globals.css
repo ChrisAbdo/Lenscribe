@@ -9,3 +9,11 @@
 [data-theme='light'] {
   @apply bg-white text-black transition-all duration-300;
 }
+
+.card3 {
+  @apply transition-colors duration-500;
+}
+
+.card3:hover {
+  @apply bg-[#DADDE2] dark:bg-[#303030];
+}
