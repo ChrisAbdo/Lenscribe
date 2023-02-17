@@ -143,7 +143,7 @@ const Generate = () => {
                       value={generatedBios}
                       onChange={(e) => setGeneratedBios(e.target.value)}
                       placeholder="Write your story here..."
-                      className="block w-full resize-y h-24"
+                      className=""
                     />
                   </div>
                 </div>
