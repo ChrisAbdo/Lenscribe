@@ -47,7 +47,7 @@ const AlertDialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         'fixed z-50 grid w-full max-w-lg scale-100 gap-4 bg-white p-6 opacity-100 animate-in fade-in-90 slide-in-from-bottom-10 sm:rounded-lg sm:zoom-in-90 sm:slide-in-from-bottom-0 md:w-full',
-        'dark:bg-slate-900',
+        'dark:bg-[#111]',
         className
       )}
       {...props}
@@ -92,7 +92,7 @@ const AlertDialogTitle = React.forwardRef<
     ref={ref}
     className={cn(
       'text-lg font-semibold text-slate-900',
-      'dark:text-slate-50',
+      'dark:text-white',
       className
     )}
     {...props}
@@ -106,7 +106,7 @@ const AlertDialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-slate-500', 'dark:text-slate-400', className)}
+    className={cn('text-sm text-slate-500', 'dark:text-white', className)}
     {...props}
   />
 ));
@@ -135,7 +135,7 @@ const AlertDialogCancel = React.forwardRef<
   <AlertDialogPrimitive.Cancel
     ref={ref}
     className={cn(
-      'mt-2 inline-flex h-10 items-center justify-center rounded-md border border-slate-200 bg-transparent py-2 px-4 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-700 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 sm:mt-0',
+      'mt-2 inline-flex h-10 items-center justify-center rounded-md border border-slate-200 bg-transparent py-2 px-4 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#333] dark:text-slate-100 dark:hover:bg-[#333] dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 sm:mt-0',
       className
     )}
     {...props}

@@ -39,6 +39,7 @@
     "framer-motion": "^8.4.3",
     "graphql": "^16.6.0",
     "lucide-react": "^0.115.0",
+    "mini-svg-data-uri": "^1.4.4",
     "next": "13.1.6",
     "next-themes": "^0.2.1",
     "omit-deep": "^0.3.0",

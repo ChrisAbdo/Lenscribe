@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Github } from 'lucide-react';
 
 interface ParallaxProps {
   children: string;
@@ -88,8 +89,8 @@ function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
 
 export default function Home() {
   return (
-    <div>
-      <div className="isolate bg-white dark:bg-black">
+    <div className="bg-grid-slate-100 dark:bg-grid-[#111]">
+      <div className="isolate bg-white dark:bg-black bg-grid-slate-100 dark:bg-grid-[#111]">
         <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
           <svg
             className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
@@ -120,20 +121,22 @@ export default function Home() {
           <div className="relative px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
               <div className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
                   Share your stories to Lens!
                 </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
+                <p className="mt-6 text-lg leading-8">
                   Lenscribe is a platform for sharing your stories to Lens. You
                   can either write your own story or generate one with built in
                   GPT3 compatibility!
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <Button variant="default" size="lg">
-                    Launch App
+                    <span className="text-white dark:text-black">
+                      Launch App
+                    </span>
                   </Button>
                   <AlertDialog>
-                    <AlertDialogTrigger>
+                    <AlertDialogTrigger asChild>
                       <Button variant="outline" size="lg">
                         Learn More &rarr;
                       </Button>
@@ -141,12 +144,33 @@ export default function Home() {
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Are you sure absolutely sure?
+                          Thanks for wanting to learn more! :)
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your account and remove your data from our
-                          servers.
+                          Lenscribe is an Open Source project that allows you to
+                          share your stories to Lens. You can either write your
+                          own story or generate one with built in GPT3
+                          compatibility! You have the ability to write about
+                          anything you want, from your day to day life to your
+                          favorite hobbies. You can also share your stories with
+                          your friends and family, and even share them with the
+                          world!
+                          <br />
+                          <br />
+                          <Button
+                            onClick={() => {
+                              window.open(
+                                'https://github.com/ChrisAbdo/Lenscribe'
+                              );
+                            }}
+                            variant="default"
+                            size="lg"
+                          >
+                            <span className="flex text-white dark:text-black">
+                              <Github size={15} />
+                              &nbsp; GitHub Repo &rarr;
+                            </span>
+                          </Button>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -195,10 +219,10 @@ export default function Home() {
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
                 Everyone has a story to tell. Share yours to Lens!
               </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
+              <p className="mt-6 text-lg leading-8">
                 Anything you want to share with the world, Lenscribe is the
                 place to do it. From your own personal stories to your favorite
                 quotes, Lenscribe is the place to share it all.
@@ -211,14 +235,8 @@ export default function Home() {
                   Get started
                 </a> */}
                 <Button variant="default" size="lg">
-                  Get started!
+                  <span className="text-white dark:text-black">Launch App</span>
                 </Button>
-                <a
-                  href="#"
-                  className="text-base font-semibold leading-7 text-gray-900"
-                >
-                  Learn more <span aria-hidden="true">→</span>
-                </a>
               </div>
             </div>
           </div>
@@ -249,6 +267,15 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      <a
+        href="https://www.twitter.com/abdo_eth"
+        rel="noreferrer"
+        target="_blank"
+        className=" flex flex-col items-center justify-center text-center text-gray-500 text-sm underline"
+      >
+        Built with ❤️ by Chris Abdo
+      </a>
     </div>
   );
 }
