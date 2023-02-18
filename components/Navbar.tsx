@@ -27,6 +27,7 @@ import {
   Github,
   Twitter,
   BookOpen,
+  X,
 } from 'lucide-react';
 import {
   NavigationMenu,
@@ -78,6 +79,7 @@ export default function Navbar({}: Props) {
 
   const [mounted, setMounted] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [hamburgerOpen, setHamburgerOpen] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
@@ -138,13 +140,6 @@ export default function Navbar({}: Props) {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/profile">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Profile
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
             </NavigationMenu>
           </li>
 
@@ -196,19 +191,7 @@ export default function Navbar({}: Props) {
             )}
 
             {/* if there is an address and NOT on wrong network */}
-            {address && !isOnWrongNetwork && (
-              // <Button
-              //   onClick={() => requestLogin()}
-              //   variant="default"
-              //   size="lg"
-              //   className="px-4 py-1"
-              // >
-              //   <span className="text-white dark:text-black">
-              //     Sign In With Lens 🌿
-              //   </span>
-              // </Button>
-              <SignInButton />
-            )}
+            {address && !isOnWrongNetwork && <SignInButton />}
 
             {/* if connects to lens, show a hello message */}
           </DialogContent>

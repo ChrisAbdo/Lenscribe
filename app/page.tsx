@@ -237,9 +237,13 @@ export default function Home() {
                 >
                   Get started
                 </a> */}
-                <Button variant="default" size="lg">
-                  <span className="text-white dark:text-black">Launch App</span>
-                </Button>
+                <Link href="/generate">
+                  <Button variant="default" size="lg">
+                    <span className="text-white dark:text-black">
+                      Write Your Story
+                    </span>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
