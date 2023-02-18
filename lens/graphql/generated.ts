@@ -1291,6 +1291,27 @@ export enum FeedEventItemType {
   ReactionPost = 'REACTION_POST'
 }
 
+export type AddReactionMutationVariables = Exact<{
+  request: ReactionRequest;
+}>;
+
+export type AddReactionMutation = { __typename?: 'Mutation', addReaction?: any | null };
+export const AddReactionDocument = `
+    mutation addReaction($request: ReactionRequest!) {
+  addReaction(request: $request)
+}
+    `;
+
+export const useAddReactionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddReactionMutation, TError, AddReactionMutationVariables, TContext>) =>
+    useMutation<AddReactionMutation, TError, AddReactionMutationVariables, TContext>(
+      ['addReaction'],
+      (variables?: AddReactionMutationVariables) => fetcher<AddReactionMutation, AddReactionMutationVariables>(AddReactionDocument, variables)(),
+      options
+    );
+
 export type FeedHighlightsRequest = {
   cursor?: InputMaybe<Scalars['Cursor']>;
   limit?: InputMaybe<Scalars['LimitScalar']>;

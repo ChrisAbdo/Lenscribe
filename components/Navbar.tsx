@@ -119,16 +119,15 @@ export default function Navbar({}: Props) {
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <ListItem href="/radio" title="Launch Etherwav">
-                      Tune in to Etherwav to vibe to the best music on Polygon
+                    <ListItem href="/discover" title="Launch Lenscribe">
+                      Upload your stories to Lens!
                     </ListItem>
-                    <ListItem href="/radio" title="Give Heat🔥">
-                      Give heat to your favorite tracks and push them to the top
-                      of the queue
+                    <ListItem href="/discover" title="Read Anything">
+                      The world is full of stories. Read the ones on Lens!
                     </ListItem>
-                    <ListItem href="/radio" title="Podcast and Live Streaming">
-                      Podcasts available to upload and listen. Live Streaming
-                      coming soon!
+                    <ListItem href="/discover" title="Discover New Creators">
+                      Discover new creators and their stories! Who knows, you
+                      may find your next favorite creator!
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
