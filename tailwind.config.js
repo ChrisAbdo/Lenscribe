@@ -8,7 +8,11 @@ const {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class', '[data-theme="dark"]'],
-  content: ['app/**/*.{ts,tsx}', 'components/**/*.{ts,tsx}'],
+  content: [
+    'app/**/*.{ts,tsx}',
+    'components/**/*.{ts,tsx}',
+    './node_modules/flowbite-react/**/*.js',
+  ],
   theme: {
     extend: {
       colors: {
@@ -60,5 +64,6 @@ module.exports = {
       );
     },
     require('tailwindcss-animate'),
+    require('flowbite/plugin'),
   ],
 };

@@ -107,7 +107,7 @@ export default function ProfilePage({}: Props) {
         </Web3Button> */}
 
         <div className="p-4">
-          <div className="overflow-hidden sm:rounded-lg p-6 border border-slate-300 dark:border-[#333] rounded-md">
+          <div className="overflow-hidden sm:rounded-lg p-6 border border-gray-300 dark:border-[#333] bg-gray-200 dark:bg-[#111] rounded-md">
             <div className="flex">
               {/* @ts-ignore */}
               {profileData?.profile?.picture?.original?.url && (

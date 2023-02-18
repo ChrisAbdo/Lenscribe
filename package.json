@@ -10,7 +10,6 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
-   
     "@next/font": "13.1.6",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-alert-dialog": "^1.0.2",
@@ -37,6 +36,8 @@
     "eslint-config-next": "13.1.6",
     "ethers": "^5.7.2",
     "eventsource-parser": "^0.0.5",
+    "flowbite": "^1.6.3",
+    "flowbite-react": "^0.3.8",
     "framer-motion": "^8.4.3",
     "graphql": "^16.6.0",
     "lucide-react": "^0.115.0",
